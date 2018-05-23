@@ -26,6 +26,7 @@ class App extends Component {
 	            scaleLabel:{
 	                display:true,
 	                fontColor:'#340D09',
+	                labelString:"Time (yyyy-mm)"
 	            },
 	            ticks:{
 	              fontColor:'#A70F01',
@@ -117,20 +118,30 @@ class App extends Component {
 	}
 	handleRemove(){
 		let stock=this.state.textValue.toUpperCase();
-		Meteor.call('stocks.remove',stock)
+		Meteor.call('stocks.remove',stock);
 	}
 
 	renderApp(){
-		if(!this.state.labels){
-			return (
-					<div>Loading...</div>
-			)
-		}else{
+			if(!this.state.labels){
+				return (
+						<div>Loading...</div>
+				)
+			}else{
 			return (
 				<div>
-					<Chart data={this.getData()}
-						options={this.options}
-					/>
+					<div style={{display:"flex",flexWrap:'wrap'}}>
+						<div style={{flexGrow:6,maxWidth:'80%'}}>
+							<Chart data={this.getData()}
+							options={this.options}
+							/>
+						</div>
+						<div style={{flexGrow:6}}>
+							<p>User Story: I can view a graph displaying the recent trend lines for each added stock.</p>
+							<p>User Story: I can add new stocks by their symbol name. (for example: FB, MSFT, AA, BB...)</p>
+							<p>User Story: I can remove stocks.(enter a name into the box and click remove)</p>
+							<p>User Story: I can see changes in real-time when any other user adds or removes a stock. </p>
+						</div>
+					</div>
 					<InputBox handleText={this.handleText} handleChange={this.handleChange}/>
 					<button onClick={this.handleRemove}>Remove</button>
 				</div>
